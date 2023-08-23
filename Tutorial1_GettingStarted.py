@@ -10,8 +10,8 @@ Data can be found at: https://github.com/metrica-sports/sample-data
 @author: Laurie Shaw (@EightyFivePoint)
 """
 
-import Tools.Metrica_IO as mio
-import Tools.Metrica_Viz as mviz
+import Metrica_IO as mio
+import Metrica_Viz as mviz
 
 # set up initial path to data
 DATADIR = 'C:/Nesta/side projects/gambling_with_vscode/data'
