@@ -82,7 +82,7 @@ def get_distance_features(tracking_home, tracking_away, home_goal_position, away
     )
     
     print(home_to_homegoal)
-    closest_home_to_homegoal_per_frame = home_to_homegoal.min(axis=1)
+    closest_home_to_homegoal_per_frame = home_to_homegoal.apply(second_smallest, axis=1)
     print(closest_home_to_homegoal_per_frame)
 
     # Calculate distance to away goal for all players in the home team
@@ -106,7 +106,7 @@ def get_distance_features(tracking_home, tracking_away, home_goal_position, away
         axis=1
     )
         
-    closest_away_to_awaygoal_per_frame = away_to_awaygoal.min(axis=1)
+    closest_away_to_awaygoal_per_frame = away_to_awaygoal.apply(second_smallest, axis=1)
 
     # calculate distance to home goal for all players in the away team
 
@@ -128,7 +128,9 @@ def get_distance_features(tracking_home, tracking_away, home_goal_position, away
     
     return features
 
-
+def second_smallest(row):
+    sorted_values = row.sort_values()
+    return sorted_values.iloc[1]
 
 
 
@@ -142,8 +144,18 @@ def main():
 
     home_goal_position = (-53, 0)  # Replace with the actual home team goal position
     away_goal_position = (53, 0)  # Replace with the actual away team goal position
+
+    #first_do_first_period
+    tracking_home_p1 = tracking_home[tracking_home["Period"] == 1]
+    tracking_away_p1 = tracking_away[tracking_away["Period"] == 1]
+
+    tracking_home_p2 = tracking_home[tracking_home["Period"] == 2]
+    tracking_away_p2 = tracking_away[tracking_away["Period"] == 2]
     
-    features = get_distance_features(tracking_home, tracking_away, home_goal_position, away_goal_position)
+    features1 = get_distance_features(tracking_home_p1, tracking_away_p1, home_goal_position = away_goal_position, away_goal_position = home_goal_position)
+    features2 = get_distance_features(tracking_home_p2, tracking_away_p2, home_goal_position = home_goal_position, away_goal_position = away_goal_position)
+
+    features = pd.concat([features1, features2], ignore_index=True)
     
     features.to_csv("C:/Nesta/side projects/gambling_with_vscode/data/features.csv")
 
