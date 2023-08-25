@@ -34,6 +34,8 @@ away_events = events[events['Team']=='Away']
 home_events['Type'].value_counts()
 away_events['Type'].value_counts()
 
+#still works?
+
 # Get all shots
 shots = events[events['Type']=='SHOT']
 home_shots = home_events[home_events.Type=='SHOT']
