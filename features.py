@@ -140,6 +140,9 @@ def main():
     print(goal_times_game2) 
 
     tracking_home, tracking_away = append_goal_times_to_tracking_data(goal_times_game2, game_id=2)
+
+    y = tracking_home["goal_in_next_5_minutes"]
+    y.to_csv("C:/Nesta/side projects/gambling_with_vscode/data/y.csv")
     
 
     home_goal_position = (-53, 0)  # Replace with the actual home team goal position
